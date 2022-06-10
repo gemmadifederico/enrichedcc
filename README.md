@@ -42,7 +42,7 @@ python Econformance.py arg0 arg1 arg2 .. argX
 
 For example:
 ```python
-python Econformance.py Logs/Scenario1/logNormal.xes Logs/Scenario1/logFreq.xes Logs/Scenario1/logDur.xes
+python Econformance.py Example/logNormal.xes Example/logAbsence.xes Example/logDelay.xes
 ```
 All the models derived by the application of the process discovery algorithms are saved in the folder /Models.
 The fitness values obtained by the application of the confromance checking are saved in the Results.csv file.
