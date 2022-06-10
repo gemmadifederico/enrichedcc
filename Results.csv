@@ -1,0 +1,9 @@
+logA,logB,ccheu,ccind,ccdcr,ccfreq,ccdur,cctime
+..\Scenario1\logs\logNormal.xes,..\Scenario1\logs\logNormal.xes,1,1,1,0.76597602,0.640159787,1
+..\Scenario1\logs\logNormal.xes,..\Scenario1\logs\logFreq.xes,1,1,1,0.333333333,0.51868377,0.731596735
+..\Scenario1\logs\logNormal.xes,..\Scenario1\logs\logDur.xes,1,1,1,0.764377073,0.457570673,0.895935199
+..\Scenario2\logs\logNormal.xes,..\Scenario2\logs\logNormal.xes,1,1,1,1,0.701655653,1
+..\Scenario2\logs\logNormal.xes,..\Scenario2\logs\logAbsence.xes,0.751,0.751,0,0.75,0.667269371,0.903322071
+..\Scenario2\logs\logNormal.xes,..\Scenario2\logs\logDelay.xes,1,1,1,1,0.69524687,0.475214156
+..\Scenario3\logs\logNormal.xes,..\Scenario3\logs\logNormal.xes,1,1,1,1,0.662694478,1
+..\Scenario3\logs\logNormal.xes,..\Scenario3\logs\logShuffle.xes,0.756,0.756,0,1,0.668021858,0.821415431

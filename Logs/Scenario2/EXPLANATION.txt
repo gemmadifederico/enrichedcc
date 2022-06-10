@@ -1,0 +1,27 @@
+EATING ROUTINE
+
+The log contains four activities: Eat, Leave, Enter, Relax
+Each case has a single trace.
+Each case refer to a different day of recording, and it starts around 11 and ends around 9.
+Each log is composed by 1000 traces.
+The format of the file is: caseid, activity, start timestamp, complete timestamp 
+
+##########################
+NORMAL LOG logNormal.xes
+##########################
+In a normal scenario, the person starts lunch between around 11:30 and 13:00. 
+Then he leaves, to come back for dinner time, between 18 and 20.
+After having dinner, he relaxes.
+The duration of the eating activities are between 30 and 60 minutes.
+
+##########################
+DELAY LOG logDelay.xes
+##########################
+In a delayed scenario, the person has lunch between 14:00 and 15:00, and dinner on time.
+Or, he has lunch on time and delayed dinner between 21:30 and 23. 
+The duration of the eating activities are between 30 and 60 minutes.
+
+##########################
+ABSENCE LOG logAbsence.xes
+##########################
+In an absence scenario, the person skips lunch or dinner OR lunch and dinner.
