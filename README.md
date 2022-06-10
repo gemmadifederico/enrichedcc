@@ -37,7 +37,7 @@ To run the approach execute:
 ```python
 python Econformance.py arg0 arg1 arg2 .. argX
 ```
-- arg0 is the path of the event log used to discover the reference enriched model
+- arg0 is the path of the event log used to discover the reference hybrid model
 - arg1, arg2, .. , argX is the list of event logs used for the conformance
 
 For example:
