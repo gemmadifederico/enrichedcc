@@ -47,3 +47,9 @@ python Econformance.py Example/logNormal.xes Example/logAbsence.xes Example/logD
 All the models derived by the application of the process discovery algorithms are saved in the folder /Models.
 The fitness values obtained by the application of the confromance checking are saved in the Results.csv file.
 
+## Badges
+
+[![DOI](https://zenodo.org/badge/501979701.svg)](https://zenodo.org/badge/latestdoi/501979701)
+
+
+
