@@ -10,8 +10,6 @@ from pm4py.statistics.sojourn_time.log import get as soj_time_get
 import statistics as stats
 import pm4py
 import pandas as pd
-from prettytable import PrettyTable
-import json
 from decimal import Decimal
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from scipy.stats import norm
