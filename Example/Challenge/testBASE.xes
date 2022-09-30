@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- This file has been generated with the OpenXES library. It conforms -->
+<!-- to the XML serialization of the XES standard for log storage and -->
+<!-- management. -->
+<!-- XES standard version: 1.0 -->
+<!-- OpenXES library version: 1.0RC7 -->
+<!-- OpenXES is available from http://www.openxes.org/ -->
+<log xes.version="1.0" xes.features="nested-attributes" openxes.version="1.0RC7">
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext"/>
+	<global scope="event">
+		<string key="concept:name" value="__INVALID__"/>
+	</global>
+	<classifier name="Event Name" keys="concept:name"/>
+	<trace>
+		<string key="concept:name" value="trace 1"/>
+		<event>
+			<string key="concept:name" value="A"/>
+		</event>
+		<event>
+			<string key="concept:name" value="B"/>
+		</event>
+		<event>
+			<string key="concept:name" value="A"/>
+		</event>
+		<event>
+			<string key="concept:name" value="B"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="trace 2"/>
+		<event>
+			<string key="concept:name" value="A"/>
+		</event>
+		<event>
+			<string key="concept:name" value="B"/>
+		</event>
+		<event>
+			<string key="concept:name" value="A"/>
+		</event>
+		<event>
+			<string key="concept:name" value="B"/>
+		</event>
+	</trace>
+</log>
