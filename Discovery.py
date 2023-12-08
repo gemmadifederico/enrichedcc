@@ -3,7 +3,7 @@ from pm4py.objects.log.importer.xes import importer as xes_importer
 import import_ipynb
 from Statsdata import (get_freq_fitness, get_duration_fitness, get_time_fitness, get_activity_freq_stats, get_activity_duration_stats, 
 get_freq_hour_normalized, get_freq_position_normalized, get_position_fitness, get_trace_length_stats, get_length_fitness)
-from Mining import discovery_inductive, discovery_heuristic
+from Mining import discovery_inductive, discovery_heuristic, discovery_declare
 import subprocess
 import csv
 import sys
@@ -39,35 +39,33 @@ def writeTable(stats, title, f):
 def execall(path_logA, path_discovered_model):
     logA = xes_importer.apply(path_logA+".xes")
     uuidstr = str(uuid.uuid4())
-    PATH = 'Models'
+
+    PATH = os.path.join(path_discovered_model, "Models")
     if not os.path.exists(PATH):
         os.makedirs(PATH)
 
     # Discovery using Inductive
     print("Discovering using Inductive...")
-    pind, filepath_ind = discovery_inductive(logA, uuidstr)
+    pind, filepath_ind = discovery_inductive(logA, uuidstr,PATH)
     print("Done")
 
-    # Discovery using Heuristic
-    print("Discovering using Heuristic...")
-    pheu, filepath_heu = discovery_heuristic(logA, uuidstr)
-    print("Done")
+    # # Discovery using Heuristic
+    # print("Discovering using Heuristic...")
+    # pheu, filepath_heu = discovery_heuristic(logA, uuidstr,PATH)
+    # print("Done")
 
     # Discovery of DCR
     # java -jar "dcr-discovery.jar" "path xes" "path JSON .JSON"
     print("Discovering of DCRgraph...")
-    filepath_dcr = "Models\dcr_"+uuidstr+".JSON"
+    filepath_dcr = PATH+"\dcr_"+uuidstr+".JSON"
     subprocess.call(['java', '-jar', 'dcr-discovery.jar', path_logA+".xes", filepath_dcr])
     print("Done")
-
-    # Discovery of Palia
-    # java -jar "palia-discovery.jar" "path xes"
-    print("Discovering of Palia graph...")
-    filepath_palia = "Models\palia_"+uuidstr+".JSON"
-    subprocess.call(['java', '-jar', 'palia-discovery.jar', path_logA+".xes", filepath_palia])
+    
+    # Discovery of Declare
+    print("Discovering of Declare model...")
+    filepath_declare = discovery_declare(path_logA+".xes", uuidstr,PATH)
+    # filepath_declare = ""
     print("Done")
-
-    # f = open("Models\Discovery_stats_"+uuidstr+".txt", "w+")
 
     # Discovery of freq stats
     print("Discovering frequency stats...")
@@ -82,6 +80,7 @@ def execall(path_logA, path_discovered_model):
     dstats = get_activity_duration_stats(logA)
     if(dstats is None):
         print("No timestamp attribute defined")
+        raise Exception("Duration: No timestamp attribute defined") 
     # else: 
         # writeTable(dstats, "Duration", f)
     #  dmean, dmedian, dmin, dmax, dstdev
@@ -92,6 +91,7 @@ def execall(path_logA, path_discovered_model):
     abstime = get_freq_hour_normalized(logA)
     if(abstime is None):
         print("No timestamp attribute defined")
+        raise Exception("Abs Time: No timestamp attribute defined") 
     # else: 
         # writeTable(abstime, "Absolute time", f)
     print("Done")
@@ -107,10 +107,23 @@ def execall(path_logA, path_discovered_model):
     lenstats = get_trace_length_stats(logA)
     # writeTable(lenstats, "Trace length", f)
     print("Done")
+    
+    a = []
+    entry = {"UUID": uuidstr,"Ind": filepath_ind, "DCR":filepath_dcr, "Declare":filepath_declare,"Freq":fstats, "Dur": dstats, "AbsT": abstime, "Pos":posfreq, "Len":lenstats}
+    if not os.path.isfile(PATH + "/AllModels.json"):
+        a.append(entry)
+        with open(PATH + "/AllModels.json", mode='w') as f:
+            f.write(json.dumps(a, indent=2))
+    else:
+        with open(PATH + "/AllModels.json") as feedsjson:
+            feeds = json.load(feedsjson)
 
-
-    dicovered_models = open(path_discovered_model + ".json", "w")
-    jsondict = {"UUID": uuidstr,"Ind": filepath_ind, "Heu":filepath_heu, "DCR":filepath_dcr, "Palia": filepath_palia, "Freq":fstats, "Dur": dstats, "AbsT": abstime, "Pos":posfreq, "Len":lenstats}
+        feeds.append(entry)
+        with open(PATH + "/AllModels.json", mode='w') as f:
+            f.write(json.dumps(feeds, indent=2))
+            
+    dicovered_models = open(PATH + "/Models.json", "w")
+    jsondict = {"UUID": uuidstr,"Ind": filepath_ind, "DCR":filepath_dcr, "Declare":filepath_declare,"Freq":fstats, "Dur": dstats, "AbsT": abstime, "Pos":posfreq, "Len":lenstats}
     json.dump(jsondict, dicovered_models)
     dicovered_models.close()
 
@@ -119,11 +132,11 @@ def execall(path_logA, path_discovered_model):
 # %%
 if __name__ == "__main__":
     # Discover.bat logs\discovery\discovery-log models\discovered-model
+    # A: Path log 
+    # B: Path discovered models
     A = sys.argv[1]
     B = sys.argv[2]
     execall(A,B)
     print("####################")
     print("TASKS COMPLETED")
     print("####################")
-
-
